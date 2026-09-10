@@ -1,0 +1,44 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+  /* Verde exacto del isologo de Creative Events (fondo del logo). */
+  --accent-strong: #2f4a3d;
+  /* Mismo verde aclarado, para usar como texto de acento sobre fondos
+     negros (el verde del logo es muy oscuro para eso). */
+  --accent: #6fae8f;
+  /* Tipografía única del sitio: Montserrat, tanto para texto general
+     como para títulos (h1/h2/h3 y cualquier uso explícito de
+     --font-display apuntan acá). */
+  --font-display: var(--font-sans);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-accent: var(--accent);
+  --color-accent-strong: var(--accent-strong);
+  --font-sans: var(--font-sans);
+  --font-display: var(--font-display);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+}
+
+/* Títulos con la tipografía display (alternativa a Kudryashev Display). */
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  letter-spacing: -0.01em;
+}
