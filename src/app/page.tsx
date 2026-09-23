@@ -43,7 +43,7 @@ export default function Home() {
         videoSrc="/video/crve-films-bg.mp4"
         poster="/images/hero-video-poster.jpg"
         eyebrow={siteConfig.shortName}
-        title={siteConfig.tagline}
+        title="Productora de eventos con identidad"
         description={siteConfig.description}
       >
         <div className="flex flex-col gap-4 sm:flex-row">
