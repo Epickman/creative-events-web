@@ -5,7 +5,7 @@ export const siteConfig = {
   tagline: "Productora de eventos de categoría",
   description:
     "Creative Events es una productora integral de eventos y producciones de alto nivel. No solo hacemos eventos, hacemos producciones distintas y únicas, para que tu experiencia sea inolvidable desde el primer momento.",
-  url: "https://www.creativeevents.com.ar",
+  url: "https://crve-events.com",
   ogImage: "/opengraph-image",
   locale: "es_AR",
   themeColor: "#0c0c0d",

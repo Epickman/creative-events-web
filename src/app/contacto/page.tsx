@@ -1,15 +1,19 @@
 import type { Metadata } from "next";
+import { JsonLd, breadcrumbJsonLd, pageMetadata } from "@/lib/seo";
 import { siteConfig } from "@/lib/site-config";
 import { corporateGallery } from "@/lib/media";
 import { PageHero } from "@/components/page-hero";
 import { LocationMap } from "@/components/location-map";
 import { ConsultButton } from "@/components/consult-button";
 
-export const metadata: Metadata = {
+const description =
+  "Contactá a Creative Events por WhatsApp, email o Instagram para consultar por la producción de tu evento.";
+
+export const metadata: Metadata = pageMetadata({
+  path: "/contacto",
   title: "Contacto",
-  description:
-    "Contactá a Creative Events por WhatsApp, email o Instagram para consultar por la producción de tu evento.",
-};
+  description,
+});
 
 const channelClassName =
   "group flex flex-col gap-2 rounded-2xl border border-black/[.08] p-8 text-left transition-colors hover:border-black/[.16] dark:border-white/[.1] dark:hover:border-white/[.2]";
@@ -30,6 +34,13 @@ const channels = [
 export default function ContactoPage() {
   return (
     <div className="flex flex-1 flex-col">
+      <JsonLd
+        graph={[
+          breadcrumbJsonLd([
+            { name: "Contacto", path: "/contacto" },
+          ]),
+        ]}
+      />
       <PageHero
         eyebrow="Contacto"
         title="Contanos tu idea"

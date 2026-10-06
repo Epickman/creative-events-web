@@ -1,20 +1,31 @@
 import type { Metadata } from "next";
+import { JsonLd, breadcrumbJsonLd, pageMetadata } from "@/lib/seo";
 import Image from "next/image";
 import { corporateGallery, weddingGallery } from "@/lib/media";
 import { PageHero } from "@/components/page-hero";
 import { ConsultButton } from "@/components/consult-button";
 
-export const metadata: Metadata = {
+const description =
+  "Conocé a Creative Events, productora de eventos premium en Argentina: quiénes somos y qué nos diferencia.";
+
+export const metadata: Metadata = pageMetadata({
+  path: "/nosotros",
   title: "Nosotros",
-  description:
-    "Conocé a Creative Events, productora de eventos premium en Argentina: quiénes somos y qué nos diferencia.",
-};
+  description,
+});
 
 const photos = [weddingGallery[1], corporateGallery[2]];
 
 export default function NosotrosPage() {
   return (
     <div className="flex flex-1 flex-col">
+      <JsonLd
+        graph={[
+          breadcrumbJsonLd([
+            { name: "Nosotros", path: "/nosotros" },
+          ]),
+        ]}
+      />
       <PageHero
         eyebrow="Nosotros"
         title="No creemos en fórmulas"

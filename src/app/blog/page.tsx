@@ -1,16 +1,28 @@
 import type { Metadata } from "next";
+import { JsonLd, breadcrumbJsonLd, pageMetadata } from "@/lib/seo";
 import { siteConfig } from "@/lib/site-config";
 import { weddingGallery } from "@/lib/media";
 import { PageHero } from "@/components/page-hero";
 
-export const metadata: Metadata = {
+const description =
+  "Novedades e ideas de Creative Events, próximamente.";
+
+export const metadata: Metadata = pageMetadata({
+  path: "/blog",
   title: "Blog",
-  description: "Novedades e ideas de Creative Events, próximamente.",
-};
+  description,
+});
 
 export default function BlogPage() {
   return (
     <div className="flex flex-1 flex-col">
+      <JsonLd
+        graph={[
+          breadcrumbJsonLd([
+            { name: "Blog", path: "/blog" },
+          ]),
+        ]}
+      />
       <PageHero
         eyebrow="Blog"
         title="Estamos preparando esta sección"

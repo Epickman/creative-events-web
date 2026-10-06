@@ -1,14 +1,18 @@
 import type { Metadata } from "next";
+import { JsonLd, breadcrumbJsonLd, pageMetadata, serviceJsonLd } from "@/lib/seo";
 import { corporateGallery, corporateCarousel } from "@/lib/media";
 import { PageHero } from "@/components/page-hero";
 import { ImageCarousel } from "@/components/image-carousel";
 import { ConsultButton } from "@/components/consult-button";
 
-export const metadata: Metadata = {
+const description =
+  "Producción integral de eventos corporativos: lanzamientos, aniversarios, convenciones y activaciones de marca en Argentina.";
+
+export const metadata: Metadata = pageMetadata({
+  path: "/eventos-corporativos",
   title: "Eventos Corporativos",
-  description:
-    "Producción integral de eventos corporativos: lanzamientos, aniversarios, convenciones y activaciones de marca en Argentina.",
-};
+  description,
+});
 
 // Copy real de Creative Events (crve-events.com/eventos).
 const highlights = [
@@ -32,6 +36,19 @@ const highlights = [
 export default function EventosCorporativosPage() {
   return (
     <div className="flex flex-1 flex-col">
+      <JsonLd
+        graph={[
+          breadcrumbJsonLd([
+            { name: "Eventos Corporativos", path: "/eventos-corporativos" },
+          ]),
+          serviceJsonLd({
+            name: "Producción de eventos corporativos",
+            serviceType: "Event production",
+            description,
+            path: "/eventos-corporativos",
+          }),
+        ]}
+      />
       <PageHero
         eyebrow="Eventos Corporativos"
         title="Eventos Corporativos"

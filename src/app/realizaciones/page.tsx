@@ -1,13 +1,17 @@
 import type { Metadata } from "next";
+import { JsonLd, breadcrumbJsonLd, pageMetadata, serviceJsonLd } from "@/lib/seo";
 import { hero, corporateCarousel, socialCarousel } from "@/lib/media";
 import { PageHero } from "@/components/page-hero";
 import { CarouselRow } from "@/components/image-carousel";
 
-export const metadata: Metadata = {
+const description =
+  "Realizaciones de eventos corporativos y sociales producidos por Creative Events en Argentina.";
+
+export const metadata: Metadata = pageMetadata({
+  path: "/realizaciones",
   title: "Realizaciones",
-  description:
-    "Realizaciones de eventos corporativos y sociales producidos por Creative Events en Argentina.",
-};
+  description,
+});
 
 const included = [
   "Respetamos o creamos la identidad de la marca",
@@ -24,6 +28,19 @@ const included = [
 export default function RealizacionesPage() {
   return (
     <div className="flex flex-1 flex-col bg-accent-strong">
+      <JsonLd
+        graph={[
+          breadcrumbJsonLd([
+            { name: "Realizaciones", path: "/realizaciones" },
+          ]),
+          serviceJsonLd({
+            name: "Realizaciones y activaciones de marca",
+            serviceType: "Brand activation and stage design",
+            description,
+            path: "/realizaciones",
+          }),
+        ]}
+      />
       <PageHero
         eyebrow="Realizaciones"
         title="Realizamos producciones de alto nivel"

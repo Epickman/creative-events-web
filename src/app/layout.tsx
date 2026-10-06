@@ -4,6 +4,7 @@ import { siteConfig } from "@/lib/site-config";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { PageTransitionOverlay } from "@/components/page-transition-overlay";
+import { JsonLd, organizationJsonLd, websiteJsonLd } from "@/lib/seo";
 import "./globals.css";
 
 // Tipografía principal del sitio: Montserrat, tanto para texto general
@@ -43,14 +44,14 @@ export const metadata: Metadata = {
     "producción de eventos",
     "casamientos",
     "eventos corporativos",
+    "eventos sociales",
+    "productora de eventos Buenos Aires",
     "wedding planner Buenos Aires",
     "organización de eventos Argentina",
+    "ambientación de eventos",
   ],
   authors: [{ name: siteConfig.legalName }],
   creator: siteConfig.legalName,
-  alternates: {
-    canonical: siteConfig.url,
-  },
   openGraph: {
     type: "website",
     locale: siteConfig.locale,
@@ -72,29 +73,6 @@ export const metadata: Metadata = {
   },
 };
 
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@type": "EventPlanner",
-  name: siteConfig.name,
-  legalName: siteConfig.legalName,
-  description: siteConfig.description,
-  url: siteConfig.url,
-  telephone: siteConfig.contact.phoneE164,
-  email: siteConfig.contact.email,
-  sameAs: siteConfig.sameAs,
-  address: {
-    "@type": "PostalAddress",
-    addressLocality: siteConfig.address.addressLocality,
-    addressRegion: siteConfig.address.addressRegion,
-    addressCountry: siteConfig.address.addressCountry,
-  },
-  geo: {
-    "@type": "GeoCoordinates",
-    latitude: siteConfig.geo.latitude,
-    longitude: siteConfig.geo.longitude,
-  },
-};
-
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
@@ -102,11 +80,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${montserrat.variable} ${fraunces.variable} ${spaceGrotesk.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        <script
-          type="application/ld+json"
-          // eslint-disable-next-line react/no-danger
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        />
+        <JsonLd graph={[organizationJsonLd, websiteJsonLd]} />
         <PageTransitionOverlay />
         <SiteHeader />
         <main className="flex flex-1 flex-col">{children}</main>

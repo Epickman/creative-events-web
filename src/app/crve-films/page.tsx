@@ -1,15 +1,19 @@
 import type { Metadata } from "next";
+import { JsonLd, breadcrumbJsonLd, pageMetadata, serviceJsonLd } from "@/lib/seo";
 import { siteConfig } from "@/lib/site-config";
 import { filmsGallery } from "@/lib/media";
 import { ImageCarousel } from "@/components/image-carousel";
 import { ConsultButton } from "@/components/consult-button";
 import { CrveVideoBackground } from "@/components/crve-video-background";
 
-export const metadata: Metadata = {
+const description =
+  "CRVE Films, productora audiovisual boutique: cobertura cinematográfica, dirección y postproducción para eventos.";
+
+export const metadata: Metadata = pageMetadata({
+  path: "/crve-films",
   title: "CRVE Films",
-  description:
-    "CRVE Films, productora audiovisual boutique: cobertura cinematográfica, dirección y postproducción para eventos.",
-};
+  description,
+});
 
 const services = [
   {
@@ -38,6 +42,19 @@ const services = [
 export default function CrveFilmsPage() {
   return (
     <div className="relative flex flex-1 flex-col bg-black font-[family-name:var(--font-tech)] text-zinc-50">
+      <JsonLd
+        graph={[
+          breadcrumbJsonLd([
+            { name: "CRVE Films", path: "/crve-films" },
+          ]),
+          serviceJsonLd({
+            name: "CRVE Films: producción audiovisual de eventos",
+            serviceType: "Event videography",
+            description,
+            path: "/crve-films",
+          }),
+        ]}
+      />
       <CrveVideoBackground src="/video/crve-films-bg.mp4" />
 
       <div className="relative z-10 flex flex-1 flex-col">

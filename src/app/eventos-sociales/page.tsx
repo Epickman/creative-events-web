@@ -1,14 +1,18 @@
 import type { Metadata } from "next";
+import { JsonLd, breadcrumbJsonLd, pageMetadata, serviceJsonLd } from "@/lib/seo";
 import { weddingGallery, socialCarousel } from "@/lib/media";
 import { PageHero } from "@/components/page-hero";
 import { ImageCarousel } from "@/components/image-carousel";
 import { ConsultButton } from "@/components/consult-button";
 
-export const metadata: Metadata = {
+const description =
+  "Wedding planning y producción integral de casamientos y eventos sociales en Argentina: diseño, coordinación de proveedores y dirección el día del evento.";
+
+export const metadata: Metadata = pageMetadata({
+  path: "/eventos-sociales",
   title: "Eventos Sociales",
-  description:
-    "Wedding planning y producción integral de casamientos y eventos sociales en Argentina: diseño, coordinación de proveedores y dirección el día del evento.",
-};
+  description,
+});
 
 // Copy real de Creative Events (crve-events.com/eventos), adaptada a casamientos.
 const highlights = [
@@ -32,6 +36,19 @@ const highlights = [
 export default function EventosSocialesPage() {
   return (
     <div className="flex flex-1 flex-col">
+      <JsonLd
+        graph={[
+          breadcrumbJsonLd([
+            { name: "Eventos Sociales", path: "/eventos-sociales" },
+          ]),
+          serviceJsonLd({
+            name: "Producción de eventos sociales y casamientos",
+            serviceType: "Wedding and social event planning",
+            description,
+            path: "/eventos-sociales",
+          }),
+        ]}
+      />
       <PageHero
         eyebrow="Eventos Sociales"
         title="Productora de eventos sociales"

@@ -1,3 +1,5 @@
+import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import Image from "next/image";
 import Link from "next/link";
 import { siteConfig } from "@/lib/site-config";
@@ -35,6 +37,11 @@ const process = [
     description: "Nos encargamos de todo hasta el final.",
   },
 ];
+
+export const metadata: Metadata = pageMetadata({
+  path: "/",
+  description: siteConfig.description,
+});
 
 export default function Home() {
   return (
