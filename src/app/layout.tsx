@@ -17,7 +17,7 @@ const montserrat = Montserrat({
 });
 
 // Serif elegante para el título principal de la home ("Productora de
-// eventos de categoría"), más premium que la display geométrica.
+// eventos con identidad"), más premium que la display geométrica.
 const fraunces = Fraunces({
   variable: "--font-hero",
   subsets: ["latin"],

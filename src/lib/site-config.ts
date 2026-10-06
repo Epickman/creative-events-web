@@ -2,7 +2,7 @@ export const siteConfig = {
   name: "Creative Events",
   legalName: "Creative Events Producciones",
   shortName: "Creative Events",
-  tagline: "Productora de eventos de categoría",
+  tagline: "Productora de eventos con identidad",
   description:
     "Creative Events es una productora integral de eventos y producciones de alto nivel. No solo hacemos eventos, hacemos producciones distintas y únicas, para que tu experiencia sea inolvidable desde el primer momento.",
   url: "https://crve-events.com",
