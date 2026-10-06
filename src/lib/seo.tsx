@@ -43,8 +43,10 @@ export function pageMetadata({
   };
 }
 
+// EventPlanner es un subtipo de LocalBusiness, pero el Rich Results Test de
+// Google no lo detecta solo: se declaran también los tipos que sí reconoce.
 export const organizationJsonLd = {
-  "@type": "EventPlanner",
+  "@type": ["EventPlanner", "LocalBusiness", "Organization"],
   "@id": organizationId,
   name: siteConfig.name,
   alternateName: "CRVE Events",
