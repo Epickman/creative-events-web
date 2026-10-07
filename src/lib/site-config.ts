@@ -22,7 +22,7 @@ export const siteConfig = {
     streetAddress: "Polo Hudson",
     addressLocality: "Hudson",
     addressRegion: "Buenos Aires",
-    postalCode: "",
+    postalCode: "1885",
     addressCountry: "AR",
   },
 
@@ -32,6 +32,18 @@ export const siteConfig = {
   },
 
   sameAs: ["https://www.instagram.com/creative.events.productions"],
+
+  // Rango de precios para el schema LocalBusiness (ej. "$$$" o "ARS 500000-5000000").
+  priceRange: "$$$",
+
+  // Horario de atención. Formato HH:MM (24 h); agregar más bloques si varía por día.
+  openingHours: [
+    {
+      dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      opens: "09:00",
+      closes: "18:00",
+    },
+  ],
 
   // Opciones del botón "Consultar": cada una arma un mensaje distinto de WhatsApp.
   consultOptions: [

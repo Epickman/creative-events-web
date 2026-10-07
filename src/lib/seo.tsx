@@ -63,12 +63,14 @@ export const organizationJsonLd = {
   image: [absoluteUrl("/images/hero-video-poster.jpg")],
   telephone: siteConfig.contact.phoneE164,
   email: siteConfig.contact.email,
+  priceRange: siteConfig.priceRange,
   sameAs: siteConfig.sameAs,
   address: {
     "@type": "PostalAddress",
     streetAddress: siteConfig.address.streetAddress,
     addressLocality: siteConfig.address.addressLocality,
     addressRegion: siteConfig.address.addressRegion,
+    postalCode: siteConfig.address.postalCode,
     addressCountry: siteConfig.address.addressCountry,
   },
   geo: {
@@ -76,6 +78,10 @@ export const organizationJsonLd = {
     latitude: siteConfig.geo.latitude,
     longitude: siteConfig.geo.longitude,
   },
+  openingHoursSpecification: siteConfig.openingHours.map((hours) => ({
+    "@type": "OpeningHoursSpecification",
+    ...hours,
+  })),
   areaServed: [
     { "@type": "City", name: "Buenos Aires" },
     { "@type": "Country", name: "Argentina" },
