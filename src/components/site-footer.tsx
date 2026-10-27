@@ -56,9 +56,17 @@ export function SiteFooter() {
         </div>
       </div>
 
-      <div className="border-t border-white/10 px-6 py-6 text-center text-xs text-zinc-500">
-        © {new Date().getFullYear()} {siteConfig.legalName}. Todos los
-        derechos reservados.
+      <div className="flex flex-col items-center gap-2 border-t border-white/10 px-6 py-6 text-center text-xs text-zinc-500">
+        <p>
+          © {new Date().getFullYear()} {siteConfig.legalName}. Todos los
+          derechos reservados.
+        </p>
+        <Link
+          href="/politica-de-privacidad"
+          className="transition-colors hover:text-accent"
+        >
+          Política de Privacidad
+        </Link>
       </div>
     </footer>
   );

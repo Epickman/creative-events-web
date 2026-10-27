@@ -11,6 +11,13 @@ const nextConfig: NextConfig = {
         destination: "https://crve-events.com/:path*",
         permanent: true,
       },
+      // El link viejo de la política de privacidad tenía tilde
+      // (/política-de-privacidad); el slug real va sin tilde.
+      {
+        source: "/pol%C3%ADtica-de-privacidad",
+        destination: "/politica-de-privacidad",
+        permanent: true,
+      },
     ];
   },
 };
