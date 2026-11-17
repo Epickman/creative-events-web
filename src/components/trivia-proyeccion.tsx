@@ -130,7 +130,7 @@ function Contenido({ vivo, restante, respondieron, finalistas, puntajes }: {
     const esFinal = vivo.ronda === "final";
     return (
       <div className="w-full text-center">
-        <p className="text-[4vh] uppercase tracking-[0.3em]" style={{ color: t.acento }}>{esFinal ? "Llegó la" : "¡Arranca la trivia!"}</p>
+        <p className="text-[4vh] uppercase tracking-[0.3em]" style={{ color: t.acento }}>{esFinal ? "Llegó la" : "¡Empieza la trivia!"}</p>
         <p className="text-[18vh] font-bold leading-none text-white">{esFinal ? "Final" : "Juegan todos"}</p>
         {esFinal ? (
           <div className="mx-auto mt-[4vh] grid max-w-[80vw] grid-cols-2 gap-x-[4vw] gap-y-[1.2vh] text-left text-[3.2vh]">
