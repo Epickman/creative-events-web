@@ -171,7 +171,7 @@ function Contenido({ vivo, restante, respondieron, finalistas, puntajes }: {
         <div className="max-w-[75vw] text-center">
           <p className="text-[6.5vh] font-bold leading-tight text-white">{vivo.texto}</p>
           <p className="mt-[1.5vh] text-[3vh] font-semibold text-[#E0B84B]">
-            Vale {vivo.puntos ?? 100} pts{vivo.resta ? ` · si errás, restás ${vivo.resta}` : ""}
+            Vale {vivo.puntos ?? 100} pts{vivo.resta ? ` · si errás o no respondés, restás ${vivo.resta}` : ""}
           </p>
         </div>
         {!revelada && (
