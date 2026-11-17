@@ -19,6 +19,8 @@ type Vivo = {
   total?: number;
   inicio?: number;
   duracion?: number;
+  puntos?: number;
+  resta?: number;
   correcta?: number | null;
   conteo?: number[] | null;
   ganador?: { key: string; nombre: string; puntos: number } | null;
@@ -166,7 +168,12 @@ function Contenido({ vivo, restante, respondieron, finalistas, puntajes }: {
         )}
       </div>
       <div className="flex flex-1 items-center justify-center gap-[4vw] py-[3vh]">
-        <p className="max-w-[75vw] text-center text-[6.5vh] font-bold leading-tight text-white">{vivo.texto}</p>
+        <div className="max-w-[75vw] text-center">
+          <p className="text-[6.5vh] font-bold leading-tight text-white">{vivo.texto}</p>
+          <p className="mt-[1.5vh] text-[3vh] font-semibold text-[#E0B84B]">
+            Vale {vivo.puntos ?? 100} pts{vivo.resta ? ` · si errás, restás ${vivo.resta}` : ""}
+          </p>
+        </div>
         {!revelada && (
           <div className={`flex h-[16vh] w-[16vh] shrink-0 items-center justify-center rounded-full text-[8vh] font-bold text-white ${segs <= 5 ? "bg-[#A4161A]" : "bg-[#344E41]"}`}>
             {segs}
