@@ -42,12 +42,12 @@ const TEMAS: Record<string, Tema> = {
     acento: "#344E41", destacado: "#E0B84B", mal: "#A4161A", primero: "#B7950B",
     opciones: ["#C0392B", "#2471A3", "#B7950B", "#1E8449"],
   },
-  // Logo de Y-TEC: negro con brillo magenta neón y letras blancas.
+  // Y-TEC / YPF: negro azulado con brillo turquesa y letras blancas.
   ytec: {
-    marca: "Y-TEC", fondo: "#07030A",
-    brillo: "radial-gradient(ellipse 70% 60% at 85% 0%, rgba(239,51,172,0.55), transparent 70%), radial-gradient(ellipse 50% 50% at 100% 100%, rgba(129,51,31,0.45), transparent 70%)",
-    texto: "#F3E6EE", titulo: "#FFFFFF", suave: "#C9A3B9", acento: "#EF33AC", destacado: "#FF8AD0", mal: "#FF2E63",
-    primero: "#EF33AC", opciones: ["#EF33AC", "#8B3DFF", "#1FB6D6", "#FF7A1A"],
+    marca: "Y-TEC", fondo: "#03080C",
+    brillo: "radial-gradient(ellipse 70% 60% at 85% 0%, rgba(0,178,198,0.5), transparent 70%), radial-gradient(ellipse 50% 50% at 100% 100%, rgba(31,91,216,0.4), transparent 70%)",
+    texto: "#E6F4F6", titulo: "#FFFFFF", suave: "#9BC3CC", acento: "#00B2C6", destacado: "#5FE3F0", mal: "#FF2E63",
+    primero: "#00B2C6", opciones: ["#00B2C6", "#1F5BD8", "#F2A900", "#7A3DFF"],
   },
 };
 const temaDe = (id: string) => TEMAS[id] ?? TEMAS.creative;
