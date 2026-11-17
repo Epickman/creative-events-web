@@ -28,9 +28,29 @@ type Vivo = {
 type Puntaje = { key: string; nombre: string; grupo?: string | null; puntos: number; tiempo: number };
 type Finalista = { key: string; nombre: string; grupo?: string | null; puntos: number };
 
-// Mismos colores y formas que los botones del celular.
-const COLORES = ["#C0392B", "#2471A3", "#B7950B", "#1E8449"];
 const FORMAS = ["▲", "●", "■", "★"];
+
+// Estéticas por evento (Trivia → Configuración en la app). Mismos colores que
+// utils/triviaTemas.ts de la app: si se cambia uno, cambiar el otro.
+type Tema = {
+  marca: string | null; fondo: string; brillo: string | null; texto: string; titulo: string;
+  suave: string; acento: string; destacado: string; mal: string; primero: string; opciones: string[];
+};
+const TEMAS: Record<string, Tema> = {
+  creative: {
+    marca: null, fondo: "#1E3027", brillo: null, texto: "#DAD7CD", titulo: "#FFFFFF", suave: "#A3B18A",
+    acento: "#344E41", destacado: "#E0B84B", mal: "#A4161A", primero: "#B7950B",
+    opciones: ["#C0392B", "#2471A3", "#B7950B", "#1E8449"],
+  },
+  // Logo de Y-TEC: negro con brillo magenta neón y letras blancas.
+  ytec: {
+    marca: "Y-TEC", fondo: "#07030A",
+    brillo: "radial-gradient(ellipse 70% 60% at 85% 0%, rgba(239,51,172,0.55), transparent 70%), radial-gradient(ellipse 50% 50% at 100% 100%, rgba(129,51,31,0.45), transparent 70%)",
+    texto: "#F3E6EE", titulo: "#FFFFFF", suave: "#C9A3B9", acento: "#EF33AC", destacado: "#FF8AD0", mal: "#FF2E63",
+    primero: "#EF33AC", opciones: ["#EF33AC", "#8B3DFF", "#1FB6D6", "#FF7A1A"],
+  },
+};
+const temaDe = (id: string) => TEMAS[id] ?? TEMAS.creative;
 
 const nombreRonda = (r: string) => (r === "final" ? "Final" : "Ronda general");
 
@@ -47,6 +67,7 @@ function useValor<T>(path: string | null, inicial: T): T {
 export function TriviaProyeccion({ eventoId }: { eventoId: string }) {
   const base = `eventos/${eventoId}`;
   const nombreEvento = useValor<string>(`${base}/nombre`, "");
+  const t = temaDe(useValor<string>(`${base}/trivia/config/tema`, "creative"));
   const vivo = useValor<Vivo | null>(`${base}/trivia/vivo`, null);
   const finalistas = useValor<Record<string, Finalista>>(`${base}/trivia/finalistas`, {});
   const offset = useValor<number>(".info/serverTimeOffset", 0);
@@ -72,13 +93,21 @@ export function TriviaProyeccion({ eventoId }: { eventoId: string }) {
       : 0;
 
   return (
-    <div className="fixed inset-0 z-[1000] flex flex-col overflow-hidden bg-[#1E3027] text-[#DAD7CD]">
-      <header className="flex items-center justify-between px-[4vw] py-[2.5vh] text-[2.2vh] font-semibold uppercase tracking-[0.3em] text-[#A3B18A]">
-        <span>{nombreEvento || "Creative Events"}</span>
+    <div
+      className="fixed inset-0 z-[1000] flex flex-col overflow-hidden"
+      style={{ backgroundColor: t.fondo, backgroundImage: t.brillo ?? undefined, color: t.texto }}
+    >
+      <header className="flex items-center justify-between px-[4vw] py-[2.5vh] text-[2.2vh] font-semibold uppercase tracking-[0.3em]" style={{ color: t.suave }}>
+        {t.marca ? (
+          <span className="text-[4.5vh] font-black tracking-[0.12em] text-white normal-case">{t.marca}</span>
+        ) : (
+          <span>{nombreEvento || "Creative Events"}</span>
+        )}
         <span>{vivo?.ronda ? `Trivia · ${nombreRonda(vivo.ronda)}` : "Trivia"}</span>
       </header>
       <main className="flex flex-1 flex-col items-center justify-center px-[4vw] pb-[4vh]">
         <Contenido
+          t={t}
           vivo={vivo}
           restante={restante}
           respondieron={Object.keys(respuestas).length}
@@ -92,13 +121,16 @@ export function TriviaProyeccion({ eventoId }: { eventoId: string }) {
   );
 }
 
-function Contenido({ vivo, restante, respondieron, finalistas, puntajes }: {
-  vivo: Vivo | null; restante: number; respondieron: number; finalistas: Finalista[]; puntajes: Puntaje[];
+function Contenido({ t, vivo, restante, respondieron, finalistas, puntajes }: {
+  t: Tema; vivo: Vivo | null; restante: number; respondieron: number; finalistas: Finalista[]; puntajes: Puntaje[];
 }) {
   if (!vivo?.ronda) {
     return (
       <div className="text-center">
-        <p className="text-[14vh] font-bold leading-none text-white">Trivia</p>
+        {t.marca && <p className="mb-[2vh] text-[20vh] font-black leading-none tracking-[0.08em] text-white" style={{ textShadow: `0 0 6vh ${t.acento}` }}>{t.marca}</p>}
+        <p className="font-bold leading-none" style={{ color: t.marca ? t.acento : t.titulo, fontSize: t.marca ? "8vh" : "14vh", letterSpacing: t.marca ? "0.3em" : undefined }}>
+          {t.marca ? "TRIVIA" : "Trivia"}
+        </p>
         <p className="mt-[3vh] text-[3.5vh]">Abrí la app, entrá a tu pase y tocá <b>TRIVIA</b> para ver tu grupo.</p>
       </div>
     );
@@ -108,8 +140,8 @@ function Contenido({ vivo, restante, respondieron, finalistas, puntajes }: {
     return (
       <div className="text-center">
         <p className="text-[16vh] leading-none">🏆</p>
-        <p className="mt-[2vh] text-[3.5vh] uppercase tracking-[0.3em] text-[#A3B18A]">Ganador de la trivia</p>
-        <p className="mt-[2vh] animate-pulse text-[11vh] font-bold leading-tight text-white">{vivo.ganador?.nombre ?? "—"}</p>
+        <p className="mt-[2vh] text-[3.5vh] uppercase tracking-[0.3em]" style={{ color: t.suave }}>Ganador de la trivia</p>
+        <p className="mt-[2vh] animate-pulse text-[11vh] font-bold leading-tight text-white" style={{ textShadow: t.marca ? `0 0 5vh ${t.acento}` : undefined }}>{vivo.ganador?.nombre ?? "—"}</p>
         {vivo.ganador && <p className="mt-[2vh] text-[4vh]">{vivo.ganador.puntos} puntos</p>}
       </div>
     );
@@ -119,12 +151,12 @@ function Contenido({ vivo, restante, respondieron, finalistas, puntajes }: {
     const esFinal = vivo.ronda === "final";
     return (
       <div className="w-full text-center">
-        <p className="text-[4vh] uppercase tracking-[0.3em] text-[#A3B18A]">{esFinal ? "Llegó la" : "¡Arranca la trivia!"}</p>
+        <p className="text-[4vh] uppercase tracking-[0.3em]" style={{ color: t.marca ? t.acento : t.suave }}>{esFinal ? "Llegó la" : "¡Arranca la trivia!"}</p>
         <p className="text-[18vh] font-bold leading-none text-white">{esFinal ? "Final" : "Juegan todos"}</p>
         {esFinal ? (
           <div className="mx-auto mt-[4vh] grid max-w-[80vw] grid-cols-2 gap-x-[4vw] gap-y-[1.2vh] text-left text-[3.2vh]">
             {[...finalistas].sort((a, b) => b.puntos - a.puntos).map((f) => (
-              <p key={f.key} className="truncate">• {f.nombre} <span className="text-[#A3B18A]">({f.grupo})</span></p>
+              <p key={f.key} className="truncate">• {f.nombre} <span style={{ color: t.suave }}>({f.grupo})</span></p>
             ))}
           </div>
         ) : (
@@ -140,10 +172,14 @@ function Contenido({ vivo, restante, respondieron, finalistas, puntajes }: {
         <p className="mb-[3vh] text-center text-[6vh] font-bold text-white">Ranking · {nombreRonda(vivo.ronda)}</p>
         <ol className="space-y-[1vh]">
           {puntajes.slice(0, 10).map((p, i) => (
-            <li key={p.key} className={`flex items-center gap-[2vw] rounded-[1.5vh] px-[2vw] py-[1.2vh] text-[3.4vh] ${i === 0 ? "bg-[#B7950B] text-white" : "bg-white/10"}`}>
+            <li
+              key={p.key}
+              className={`flex items-center gap-[2vw] rounded-[1.5vh] px-[2vw] py-[1.2vh] text-[3.4vh] ${i === 0 ? "text-white" : "bg-white/10"}`}
+              style={i === 0 ? { backgroundColor: t.primero } : undefined}
+            >
               <span className="w-[4vw] font-bold">{i + 1}</span>
               <span className="flex-1 truncate">{p.nombre}</span>
-              {vivo.ronda === "final" ? null : <span className="text-[2.6vh] text-[#A3B18A]">{p.grupo}</span>}
+              {vivo.ronda === "final" ? null : <span className="text-[2.6vh]" style={{ color: t.suave }}>{p.grupo}</span>}
               <span className="font-bold">{p.puntos}</span>
             </li>
           ))}
@@ -170,12 +206,15 @@ function Contenido({ vivo, restante, respondieron, finalistas, puntajes }: {
       <div className="flex flex-1 items-center justify-center gap-[4vw] py-[3vh]">
         <div className="max-w-[75vw] text-center">
           <p className="text-[6.5vh] font-bold leading-tight text-white">{vivo.texto}</p>
-          <p className="mt-[1.5vh] text-[3vh] font-semibold text-[#E0B84B]">
+          <p className="mt-[1.5vh] text-[3vh] font-semibold" style={{ color: t.destacado }}>
             Vale {vivo.puntos ?? 100} pts{vivo.resta ? ` · si errás o no respondés, restás ${vivo.resta}` : ""}
           </p>
         </div>
         {!revelada && (
-          <div className={`flex h-[16vh] w-[16vh] shrink-0 items-center justify-center rounded-full text-[8vh] font-bold text-white ${segs <= 5 ? "bg-[#A4161A]" : "bg-[#344E41]"}`}>
+          <div
+            className="flex h-[16vh] w-[16vh] shrink-0 items-center justify-center rounded-full text-[8vh] font-bold text-white"
+            style={{ backgroundColor: segs <= 5 ? t.mal : t.acento, boxShadow: t.marca ? `0 0 5vh ${segs <= 5 ? t.mal : t.acento}` : undefined }}
+          >
             {segs}
           </div>
         )}
@@ -188,7 +227,7 @@ function Contenido({ vivo, restante, respondieron, finalistas, puntajes }: {
             <div
               key={i}
               className="relative flex items-center gap-[2vw] overflow-hidden rounded-[2vh] px-[2.5vw] py-[3.5vh] text-[4vh] font-bold text-white transition-opacity duration-500"
-              style={{ backgroundColor: COLORES[i], opacity: revelada && !esCorrecta ? 0.3 : 1 }}
+              style={{ backgroundColor: t.opciones[i], opacity: revelada && !esCorrecta ? 0.3 : 1 }}
             >
               {revelada && total > 0 && (
                 <div className="absolute inset-y-0 left-0 bg-black/20" style={{ width: `${(n / total) * 100}%` }} />
